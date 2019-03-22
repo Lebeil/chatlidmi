@@ -3,12 +3,12 @@ import 'firebase/firestore'
 import * as Rebase from "re-base";
 
 const app = firebase.initializeApp({
-    apiKey: "AIzaSyBH53pNY2kLaY3e20mgcs8-PuJe_VhyZqs",
-    authDomain: "chat-lidmi.firebaseapp.com",
-    databaseURL: "https://chat-lidmi.firebaseio.com",
-    projectId: "chat-lidmi",
-    storageBucket: "chat-lidmi.appspot.com",
-    messagingSenderId: "17873806160"
+    apiKey: process.env.REACT_APP_APIKEY,
+    authDomain: process.env.REACT_APP_AUTHDOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASEURL,
+    projectId: process.env.REACT_APP_PROJECTID,
+    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID
 })
 
 const db = app.firestore()
