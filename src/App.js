@@ -1,40 +1,48 @@
 import React, {Component} from 'react';
-import {base} from './firebaseHelper'
-import InputMessage from "./InputMessage";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import Root from "./Root";
+import Login from "./Login";
+import PrivateRoute from "./PrivateRoute";
 import firebase from 'firebase/app';
-import MessageList from "./MessageList";
-import Button from "@material-ui/core/Button";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class App extends Component {
-    state = {roomId: "h8wxruxnv4EFEXczJeDq"}
-
-    addMessage = (message) => {
-        const {roomId} = this.state
-        const payload = {
-            content: message,
-            date: firebase.firestore.FieldValue.serverTimestamp()
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: true
         }
-        base.addToCollection(`rooms/${roomId}/messages`, payload)
+        console.log("initial loading", this.state.loading)
+    }
+
+    componentDidMount() {
+        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({user: user, loading: false})
+            } else {
+                this.setState({user: null, loading: false})
+            }
+        })
+    }
+
+    componentWillUnmount() {
+        this.unregisterAuthObserver()
     }
 
     render() {
-        const {roomId} = this.state
-        return (
-            <div className="App">
-                <AppBar position="static">
-                    <Toolbar>
-                        <Button color="inherit">Login</Button>
-                    </Toolbar>
-                </AppBar>
-                <div style={{marginBottom: 100}}>
-                    <MessageList/>
-                </div>
-                <div className="input-container">
-                    <InputMessage roomId={roomId} addMessage={this.addMessage}/>
-                </div>
+        if (this.state.loading === true) {
+            return <div className='loader'>
+                <CircularProgress/>
             </div>
+        }
+        const authenticated = firebase.auth().currentUser !== null
+        return (
+            <BrowserRouter>
+                <Switch>
+                    <PrivateRoute exact path="/" component={Root} authenticated={authenticated}/>
+                    <Route exact path="/login" component={Login}/>
+                </Switch>
+            </BrowserRouter>
         );
     }
 }

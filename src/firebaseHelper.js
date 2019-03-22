@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 import * as Rebase from "re-base";
+import * as firebaseui from 'firebaseui'
 
 const app = firebase.initializeApp({
     apiKey: process.env.REACT_APP_APIKEY,
@@ -14,4 +16,13 @@ const app = firebase.initializeApp({
 const db = app.firestore()
 const base = Rebase.createClass(db);
 
-export {db, base}
+const uiConfig = {
+    signInFlow: 'popup',
+    signInSuccessUrl: '/',
+    signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID
+    ],
+    credentialHelper: firebaseui.auth.CredentialHelper.NONE
+};
+
+export {db, base, uiConfig}
