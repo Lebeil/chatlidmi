@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import {base} from './firebaseHelper'
+import InputMessage from "./InputMessage";
+import firebase from 'firebase/app';
+import MessageList from "./MessageList";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    state = {roomId: "h8wxruxnv4EFEXczJeDq"}
+
+    addMessage = (message) => {
+        const {roomId} = this.state
+        const payload = {
+            content: message,
+            date: firebase.firestore.FieldValue.serverTimestamp()
+        }
+        base.addToCollection(`rooms/${roomId}/messages`, payload)
+    }
+
+    render() {
+        const {roomId} = this.state
+        return (
+            <div className="App">
+                <MessageList/>
+                <InputMessage roomId={roomId} addMessage={this.addMessage}/>
+            </div>
+        );
+    }
 }
 
 export default App;
