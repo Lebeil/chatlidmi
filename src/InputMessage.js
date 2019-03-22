@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import firebase from 'firebase/app';
-import {base} from './firebaseHelper'
 import TextField from "@material-ui/core/TextField";
 
 class InputMessage extends Component {
@@ -13,19 +11,9 @@ class InputMessage extends Component {
 
     onKeyPress = (e) => {
         if (e.key === 'Enter') {
-            //this.addMessage()
             this.props.addMessage(this.state.message)
             this.setState({message: ""})
         }
-    }
-
-    addMessage = () => {
-        const roomId = this.props.roomId
-        const payload = {
-            content: this.state.message,
-            date: firebase.firestore.FieldValue.serverTimestamp()
-        }
-        base.addToCollection(`rooms/${roomId}/messages`, payload)
     }
 
     render() {

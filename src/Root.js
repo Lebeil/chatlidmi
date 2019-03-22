@@ -14,7 +14,9 @@ class Root extends Component {
         const {roomId} = this.state
         const payload = {
             content: message,
-            date: firebase.firestore.FieldValue.serverTimestamp()
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            authorId: firebase.auth().currentUser.uid,
+            authorName: firebase.auth().currentUser.displayName
         }
         base.addToCollection(`rooms/${roomId}/messages`, payload)
     }

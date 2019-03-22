@@ -22,3 +22,20 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.chat-bubble-container {
+    display: flex;
+}
+
+.chat-bubble {
+    width: auto;
+    margin: 8px;
+    display: inline-block;
+    border-radius: 16px
+}
+
+.chat-bubble-container-me {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
