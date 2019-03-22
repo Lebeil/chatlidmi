@@ -3,6 +3,9 @@ import {base} from './firebaseHelper'
 import InputMessage from "./InputMessage";
 import firebase from 'firebase/app';
 import MessageList from "./MessageList";
+import Button from "@material-ui/core/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 
 class App extends Component {
     state = {roomId: "h8wxruxnv4EFEXczJeDq"}
@@ -20,8 +23,17 @@ class App extends Component {
         const {roomId} = this.state
         return (
             <div className="App">
-                <MessageList/>
-                <InputMessage roomId={roomId} addMessage={this.addMessage}/>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                </AppBar>
+                <div style={{marginBottom: 100}}>
+                    <MessageList/>
+                </div>
+                <div className="input-container">
+                    <InputMessage roomId={roomId} addMessage={this.addMessage}/>
+                </div>
             </div>
         );
     }

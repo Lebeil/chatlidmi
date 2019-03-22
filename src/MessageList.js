@@ -1,5 +1,18 @@
 import React, {Component} from 'react';
 import {base} from "./firebaseHelper";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import {withStyles} from "@material-ui/core";
+
+const styles = {
+    card: {
+        width: 'auto',
+        margin: 8,
+        display: 'inline-block',
+        borderRadius: 16
+    }
+};
 
 class MessageList extends Component {
     state = {messages: []}
@@ -27,17 +40,24 @@ class MessageList extends Component {
 
 
     render() {
+        const {classes} = this.props
         return (
             <div>
                 {this.state.messages.map(message =>
-                    <p key={message.id}>
-                        {message.content}
-                    </p>
+                    <div style={{display: 'block'}} key={message.id}>
+                        <Card className={classes.card}>
+                            <CardContent>
+                                <Typography component="p">
+                                    {message.content}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </div>
                 )}
             </div>
         );
     }
 }
 
-export default MessageList;
+export default withStyles(styles)(MessageList)
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebase from 'firebase/app';
 import {base} from './firebaseHelper'
+import TextField from "@material-ui/core/TextField";
 
 class InputMessage extends Component {
     state = {message: ""}
@@ -30,10 +31,20 @@ class InputMessage extends Component {
     render() {
         return (
             <div>
-                <textarea
+                <TextField
+                    id="outlined-full-width"
                     onChange={this.onChange}
                     onKeyPress={this.onKeyPress}
-                    value={this.state.message}/>
+                    value={this.state.message}
+                    label="Votre message"
+                    placeholder="Votre message"
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
             </div>
         );
     }
