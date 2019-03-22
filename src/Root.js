@@ -28,13 +28,13 @@ class Root extends Component {
     render() {
         const {roomId} = this.state
         return (
-            <div>
-                <AppBar position="static">
+            <div className='app'>
+                <AppBar position="fixed" className='app-bar'>
                     <Toolbar>
                         <Button color="inherit" onClick={this.logOut}>Logout</Button>
                     </Toolbar>
                 </AppBar>
-                <div style={{marginBottom: 100}}>
+                <div className='messages-container'>
                     <MessageList/>
                 </div>
                 <div className="input-container">
